@@ -1,0 +1,127 @@
+---
+title: "Homework_2"
+author: "Emily Ogden"
+date: "January 15, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Scenario 1  
+a)  
+$H_0:\mu_{2009}=\mu_{2010}$  
+$H_A:\mu_{2009}\neq\mu_{2010}$  
+
+b)  
+```{r}
+catch1=c(91900,95200,61900,73600,114300,117000,129500,74200,112700,152100,90700,89400,127500,142200)
+catch2=c(82900,86700,46900,41300,91600,100400,128400,55900,101700,139100,79300,76100,114100,139800)
+test=c(82900,86700,46900,41300,91600,100400,128400,55900,101700,139100,79300,76100,114100,139800,91900,95200,61900,73600,114300,117000,129500,74200,112700,152100,90700,89400,127500,142200)
+fish2=rbind(catch1,catch2)
+hist(catch1,main="",xlab="2009 catch (tonnes)",breaks = 10)
+hist(catch2,main="",xlab="2010 catch (tonnes)",breaks = 10)
+hist(test)
+```
+  
+c) A paired two-sample t-test would be best for this scenario, because each year's catch is by village.
+
+d)  
+```{r}
+t.test(catch1,catch2,paired=T)
+```
+  
+e)
+```{r}
+qt(0.95,13)
+```
+
+$t_{obs}=6.38$
+$t_{crit}=1.77$
+
+f) 
+Both $t_{obs}>t_{crit}$ and p<0.05, indicating that there is evidence to reject the null hypothesis that the mean catch from 2009 and 2010 are equal. 
+
+#Scenario 2
+a)  
+$H_0:\mu=15$  
+$H_A:\mu>15$  
+b)  
+```{r}
+P=c(18.4,12.9,15.3,18.3,15.6,23.3,16.5,12.3,24.6,16.2)
+hist(P,main="",xlab=expression(paste("Total phosphorus (",mu,"g/L)")))
+```
+  
+c)  
+A one-sample t-test would be best for this scenario.  
+d)  
+```{r}
+t.test(P,mu=15)
+0.09794/2
+```
+  
+e)  
+```{r}
+qt(0.975,9)
+```
+$t_{obs}=1.8462$
+$t_{crit}=2.2621$  
+f)  
+p=0.048 which is less than $\alpha$, indicating that there is evidence to reject the null hypothesis that the mean phosphorus levels are equal to 15 $\mu$g/L.Therefores there is evidence to support the alternative hypothesis that the mean phosphorus levels are greater than 15 $\mu$g/L.
+
+#Scenario 3  
+a)  
+$H_0:\mu_a=\mu_b$  
+$H_A:\mu_a\neq\mu_b$  
+b)  
+```{r}
+meat=c(2.3,1.8,1.9,1.8,2.1,2.3,2.0,2.2,2.2,1.5,1.8,2.1,2.3,2.2,2.3)
+veg=c(1.6,1.1,0.7,1.0,1.0,0.9,1.2,0.8,0.9,0.6,0.7,0.6,0.8,0.8,1.1)
+salmon=c(2.3,1.8,1.9,1.8,2.1,2.3,2.0,2.2,2.2,1.5,1.8,2.1,2.3,2.2,2.3,1.6,1.1,0.7,1.0,1.0,0.9,1.2,0.8,0.9,0.6,0.7,0.6,0.8,0.8,1.1)
+hist(meat,breaks= 10)
+hist(veg,breaks = 10)
+hist(salmon,breaks = 10)
+```
+  
+c)  
+An independent two sample t-test would be best for this scenario. 
+d)  
+```{r}
+t.test(meat,veg)
+```
+  
+e)  
+```{r}
+qt(0.95,27)
+```
+$t_{obs}=12.237$
+$t_{crit}=1.7032$  
+f)  
+Both $t_{obs}>t_{crit}$ and p<0.05, indicating that there is evidence to reject the null hypothesis that the mean growth rates are the same between carnivorous and vegetarian supplements.
+
+#Scenario 4  
+a)  
+$H_0:$PCB poisoning is independent of trophic level
+$H_A:$PCB poisoning is dependent on trophic level  
+b)  
+```{r}
+level1=c(133,100,17)
+top=c(4,61,35)
+poison=data.frame(level1,top)
+```
+  
+c)  
+A Chi-squared test would be best for this scenario.  
+d)  
+```{r}
+chisq.test(poison)
+```
+  
+e)  
+```{r}
+qchisq(0.95,2)
+```
+$X^2_{obs}=89.253$
+$X^2_{crit}=5.9914$   
+f)  
+Both $X^2_{obs}>X^2_{crit}$ and p<0.05, indicating that there is evidence to reject the null hypothesis that PCB poisoning is independent of trophic level.
